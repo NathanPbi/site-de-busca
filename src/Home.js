@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     height: 200,
     [theme.breakpoints.down('xs')]: {
-      width: '100% !important', // Overrides inline-style
+      width: '100% !important', 
       height: 100,
     },
     '&:hover, &$focusVisible': {
@@ -84,10 +84,10 @@ function Home(props) {
   return (
     <div className={classes.root}>
       {props.images &&
-        props.images.map((image) => (
+        props.images.photos.map((image) => (
           <ButtonBase
             focusRipple
-            key={image.title}
+            key={image.id}
             className={classes.image}
             focusVisibleClassName={classes.focusVisible}
             style={{
@@ -97,7 +97,7 @@ function Home(props) {
             <span
               className={classes.imageSrc}
               style={{
-                backgroundImage: `url(${image.url})`,
+                backgroundImage: `url(${image.src.original})`
               }}
             />
             <span className={classes.imageBackdrop} />
@@ -108,7 +108,7 @@ function Home(props) {
                 color='inherit'
                 className={classes.imageTitle}
               >
-                {image.title}
+                {image.id}
                 <span className={classes.imageMarked} />
               </Typography>
             </span>
