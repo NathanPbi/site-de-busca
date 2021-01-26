@@ -1,111 +1,121 @@
-import React from "react";
+import React from 'react';
 
-import {
-  AppBar,
-  Toolbar,
-//   IconButton,
-  Typography,
-  InputBase,
-} from "@material-ui/core";
-import { fade, makeStyles } from "@material-ui/core/styles";
-// import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
+import { makeStyles, ButtonBase, Typography } from '@material-ui/core';
+
 
 const useStyles = makeStyles((theme) => ({
+  
   root: {
-    palette: {
-      secondary: {
-        main: {},
+    display: 'flex',
+    flexWrap: 'wrap',
+    minWidth: 300,
+    width: '100%',
+    padding: '10px',
+
+  },
+  image: {
+    position: 'relative',
+    height: 200,
+    [theme.breakpoints.down('xs')]: {
+      width: '100% !important', // Overrides inline-style
+      height: 100,
+    },
+    '&:hover, &$focusVisible': {
+      zIndex: 1,
+      '& $imageBackdrop': {
+        opacity: 0.15,
+      },
+      '& $imageMarked': {
+        opacity: 0,
+      },
+      '& $imageTitle': {
+        border: '4px solid currentColor',
       },
     },
-    flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  focusVisible: {},
+  imageButton: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: theme.palette.common.white,
   },
-  title: {
-    flexGrow: 1,
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
-    },
+  imageSrc: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center 40%',
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: fade(theme.palette.common.white, 0.25),
-    },
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "auto",
-    },
+  imageBackdrop: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: theme.palette.common.black,
+    opacity: 0.4,
+    transition: theme.transitions.create('opacity'),
   },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+  imageTitle: {
+    position: 'relative',
+    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
   },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      width: "12ch",
-      "&:focus": {
-        width: "20ch",
-      },
-    },
+  imageMarked: {
+    height: 3,
+    width: 18,
+    backgroundColor: theme.palette.common.white,
+    position: 'absolute',
+    bottom: -2,
+    left: 'calc(50% - 9px)',
+    transition: theme.transitions.create('opacity'),
   },
 }));
 
-function Home() {
+function Home(props) {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <AppBar>
-        <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
-          <Typography className={classes.title} variant="h6" noWrap>
-            Imagens
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
+      {props.images && props.images.map((image) => (
+        <ButtonBase
+          focusRipple
+          key={image.title}
+          className={classes.image}
+          focusVisibleClassName={classes.focusVisible}
+          style={{
+            width: image.width,
+          }}
+        >
+          <span
+            className={classes.imageSrc}
+            style={{
+              backgroundImage: `url(${image.url})`,
+            }}
+          />
+          <span className={classes.imageBackdrop} />
+          <span className={classes.imageButton}>
+            <Typography
+              component='span'
+              variant='subtitle1'
+              color='inherit'
+              className={classes.imageTitle}
+            >
+              {image.title}
+              <span className={classes.imageMarked} />
+            </Typography>
+          </span>
+        </ButtonBase>
+      ))}
     </div>
-  );
+    );
 }
 
 export default Home;
