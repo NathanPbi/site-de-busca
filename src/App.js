@@ -13,20 +13,14 @@ function App() {
     const [photos, setPhotos] = useState();
   
     useEffect(() => {
-      axios
-        .get("https://api.pexels.com/v1/search?query=nature&per_page=1")
+      let api_key = "563492ad6f9170000100000101513bc261e349cb8411e9a420c4de69"
+      axios.defaults.headers.Authorization = api_key 
+      axios.get("https://api.pexels.com/v1/search?query=nature&per_page=1")
         .then((res) => {
           const images = res.data;
           setPhotos(images);
         });
     }, []);
-  
-    //   return (
-    //     <div>
-    //       <ul>{photos && photos.map((images) => <li>{images.name}</li>)}</ul>
-    //     </div>
-    //   );
-    // }
   
   const theme = createMuiTheme({
     spacing: 4,

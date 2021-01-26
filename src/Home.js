@@ -2,16 +2,13 @@ import React from 'react';
 
 import { makeStyles, ButtonBase, Typography } from '@material-ui/core';
 
-
 const useStyles = makeStyles((theme) => ({
-  
   root: {
     display: 'flex',
     flexWrap: 'wrap',
     minWidth: 300,
     width: '100%',
     padding: '10px',
-
   },
   image: {
     position: 'relative',
@@ -66,7 +63,9 @@ const useStyles = makeStyles((theme) => ({
   },
   imageTitle: {
     position: 'relative',
-    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${theme.spacing(1) + 6}px`,
+    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px ${
+      theme.spacing(1) + 6
+    }px`,
   },
   imageMarked: {
     height: 3,
@@ -84,38 +83,39 @@ function Home(props) {
 
   return (
     <div className={classes.root}>
-      {props.images && props.images.map((image) => (
-        <ButtonBase
-          focusRipple
-          key={image.title}
-          className={classes.image}
-          focusVisibleClassName={classes.focusVisible}
-          style={{
-            width: image.width,
-          }}
-        >
-          <span
-            className={classes.imageSrc}
+      {props.images &&
+        props.images.map((image) => (
+          <ButtonBase
+            focusRipple
+            key={image.title}
+            className={classes.image}
+            focusVisibleClassName={classes.focusVisible}
             style={{
-              backgroundImage: `url(${image.url})`,
+              width: image.width,
             }}
-          />
-          <span className={classes.imageBackdrop} />
-          <span className={classes.imageButton}>
-            <Typography
-              component='span'
-              variant='subtitle1'
-              color='inherit'
-              className={classes.imageTitle}
-            >
-              {image.title}
-              <span className={classes.imageMarked} />
-            </Typography>
-          </span>
-        </ButtonBase>
-      ))}
+          >
+            <span
+              className={classes.imageSrc}
+              style={{
+                backgroundImage: `url(${image.url})`,
+              }}
+            />
+            <span className={classes.imageBackdrop} />
+            <span className={classes.imageButton}>
+              <Typography
+                component='span'
+                variant='subtitle1'
+                color='inherit'
+                className={classes.imageTitle}
+              >
+                {image.title}
+                <span className={classes.imageMarked} />
+              </Typography>
+            </span>
+          </ButtonBase>
+        ))}
     </div>
-    );
+  );
 }
 
 export default Home;
